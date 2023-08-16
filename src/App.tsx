@@ -1,7 +1,11 @@
-const DIM = 20;
+const DIM = 40;
+import { useRef } from "react";
 import { Square } from "./assets/components/Square";
+import { motion } from "framer-motion";
 function App() {
-  const createDiv = (xMax: number, yMax: number) => {
+  const constraintsRef = useRef(null);
+
+  const createBox = (xMax: number, yMax: number) => {
     const result = [];
     for (let x = 0; x < xMax; x++) {
       for (let y = 0; y < yMax; y++) {
@@ -14,17 +18,31 @@ function App() {
     <div
       style={{ backgroundColor: "lightgray", height: "100%", width: "100%" }}
     >
-      <div>Puzzle</div>
-      <div
-        style={{
-          margin: "20px",
-          position: "relative",
-        }}
-      >
-        <div>{createDiv(2, 2)}</div>
-      </div>
+      Puzzle
+      <motion.div ref={constraintsRef} style={puzzleConstraintStyle}>
+        {createBox(2, 2)}
+      </motion.div>
+      <motion.div
+        drag
+        dragConstraints={constraintsRef}
+        style={puzzlePieceStyle}
+      />
     </div>
   );
 }
+
+const puzzleConstraintStyle = {
+  backgroundColor: "pink",
+  width: "500px",
+  height: "500px",
+  margin: "20px",
+  position: "relative",
+};
+const puzzlePieceStyle = {
+  backgroundColor: "red",
+  width: DIM,
+  height: DIM,
+  position: "absolute",
+};
 
 export default App;
