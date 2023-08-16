@@ -3,6 +3,7 @@ import { useRef, useState } from "react"
 import { Square } from "./assets/components/Square"
 import { motion } from "framer-motion"
 import { PuzzlePeice } from "./assets/components/PuzzlePeice"
+import { Test } from "./assets/components/Test"
 function App() {
   const constraintsRef = useRef(null)
 
@@ -20,7 +21,7 @@ function App() {
     <div
       style={{ backgroundColor: "lightgray", height: "100%", width: "100%" }}
     >
-      <motion.div ref={constraintsRef} style={puzzleConstraintStyle}>
+      {/* <motion.div ref={constraintsRef} style={puzzleConstraintStyle}>
         {createBox(2, 2)}
         <PuzzlePeice
           xIndex={10}
@@ -29,7 +30,9 @@ function App() {
           xOffset={20}
           yOffset={20}
         />
-      </motion.div>
+      </motion.div> */}
+
+      <Test />
     </div>
   )
 }
