@@ -15,8 +15,6 @@ export const Square: FC<SquareProps> = ({ x, y, dimension }) =>
   //   borderColor: string
 
   {
-    console.log("x: ", x, ", y: ", y);
-
     return (
       <div
         style={{

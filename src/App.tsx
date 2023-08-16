@@ -1,8 +1,9 @@
 const DIM = 40;
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Square } from "./assets/components/Square";
 import { motion } from "framer-motion";
 function App() {
+  const [xy, setXy] = useState([]);
   const constraintsRef = useRef(null);
 
   const createBox = (xMax: number, yMax: number) => {
@@ -14,6 +15,7 @@ function App() {
     }
     return result;
   };
+
   return (
     <div
       style={{ backgroundColor: "lightgray", height: "100%", width: "100%" }}
@@ -21,12 +23,28 @@ function App() {
       Puzzle
       <motion.div ref={constraintsRef} style={puzzleConstraintStyle}>
         {createBox(2, 2)}
+        <motion.div
+          drag
+          dragSnapToOrigin
+          animate={{ top: xy[1], left: xy[0] }}
+          // animate={{ x: xy[0], y: xy[1] }}
+          onDragStart={() => {}}
+          onDragEnd={(event, info) => {
+            console.log("event: ", event, ", info: ", info);
+            setXy((xy) => [100 + (xy[0] ?? 0), 100 + (xy[1] ?? 0)]);
+          }}
+          dragConstraints={constraintsRef}
+          style={{
+            // top: xy[1],
+            // left: xy[0],
+            backgroundColor: "red",
+            width: DIM,
+            height: DIM,
+            zIndex: 1,
+            position: "absolute",
+          }}
+        />
       </motion.div>
-      <motion.div
-        drag
-        dragConstraints={constraintsRef}
-        style={puzzlePieceStyle}
-      />
     </div>
   );
 }
@@ -42,7 +60,8 @@ const puzzlePieceStyle = {
   backgroundColor: "red",
   width: DIM,
   height: DIM,
-  position: "absolute",
+  // position: "relative",
+  // position: "absolute",
 };
 
 export default App;
